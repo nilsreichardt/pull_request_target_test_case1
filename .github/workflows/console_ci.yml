@@ -83,26 +83,11 @@ jobs:
               - "!**/firebase.json"
               - "!**/.firebaserc"
 
-  # We are building for every PR a web preview, which will be deployed to
-  # Firebase Hosting. The link to the console will posted as comment (like:
-  # https://github.com/SharezoneApp/sharezone-app/pull/119#issuecomment-1030012299).
-  #
-  # The previews are helping reviewer and other users to quickly view the
-  # changes in a compiled version.
-  #
-  # A link to a preview expires after 3 days.
-  #
-  # Required steps to set this up:
-  # 1. Run "firebase init hosting:github"
-  # 2. Enable "Firebase Hosting API" in Google Cloud project
-  # 3. Write GitHub action job
-  # 4. Adjust console restrictions for Firebase Key "Sharezone Web Key".
-  web-preview:
+  web-build:
     needs: changes
     # We only want to build the console only for PRs.
     #
     # Otherwise this will be triggered inside a merge-queue.
-    if: ${{ github.event_name == 'pull_request_target' && needs.changes.outputs.changesFound == 'true'}}
     runs-on: ubuntu-24.04
     permissions:
       pull-requests: write # for FirebaseExtended/action-hosting-deploy to comment on PRs
