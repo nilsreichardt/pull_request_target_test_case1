@@ -116,3 +116,7 @@ jobs:
 
       - name: Build
         run: sz build console --flavor dev
+
+      - name: Notify about build
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Build finished 🎉"}' ${{ secrets.SLACK_WEBHOOK_URL }}
